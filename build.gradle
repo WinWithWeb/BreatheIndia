@@ -1,8 +1,19 @@
 plugins {
-	baseName = 'app'
-	version = '0.0.1'
 	id 'org.springframework.boot' version '2.1.2.RELEASE'
 	id 'java'
+}
+
+task stage(type: Copy, dependsOn: [clean, build]) {
+    from jar.archivePath
+    into project.rootDir 
+    rename {
+        'app.jar'
+    }
+}
+stage.mustRunAfter(clean)
+
+clean << {
+    project.file('app.jar').delete()
 }
 
 apply plugin: 'io.spring.dependency-management'
