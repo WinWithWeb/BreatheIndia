@@ -1,4 +1,6 @@
 plugins {
+	baseName = 'app'
+	version = '0.0.1'
 	id 'org.springframework.boot' version '2.1.2.RELEASE'
 	id 'java'
 }
