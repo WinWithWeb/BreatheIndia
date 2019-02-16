@@ -5,6 +5,10 @@ plugins {
 
 apply plugin: 'io.spring.dependency-management'
 
+jar {
+	baseName = 'winwithweb'
+}
+
 group = 'com.winwithweb'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
