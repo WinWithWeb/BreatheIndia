@@ -47,9 +47,11 @@ public class UserInputController {
 		System.out.println(username+"--"+email+"--");
 		if(username=="" || email==""){
 			System.out.println("Error");
+			return "home";
 		}
 		else if(username.equals(null) || email.equals(null)){
 			System.out.println("Error");
+			return "home";
 		}
 		
 		
