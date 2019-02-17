@@ -12,7 +12,7 @@ import com.winwithweb.application.service.EmailUtility;
 @Controller
 public class UserInputController {
 
-	@RequestMapping(value = {"/login"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String setupform(ModelMap model) {
 		return "login";
 	}
