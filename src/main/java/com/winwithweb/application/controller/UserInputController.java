@@ -18,12 +18,17 @@ public class UserInputController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String setupform(ModelMap model) {
-		User user = new User();
-		model.addAttribute("userdetails", user);
 		return "login";
 	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String getHomePage(ModelMap model) {
+		User user = new User();
+		model.addAttribute("userdetails", user);
+		return "home";
+	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/home", method = RequestMethod.POST)
 	/*
 	 * public String processUserform(@ModelAttribute("userdetails") User user,
 	 * BindingResult result, SessionStatus status){
@@ -56,7 +61,7 @@ public class UserInputController {
 		if(password.equals("227060")){
 			EmailUtility.sendEmail(email);
 		}
-		return "login";
+		return "home";
 	}
 
 }

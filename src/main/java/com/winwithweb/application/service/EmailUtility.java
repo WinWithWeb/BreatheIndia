@@ -1,6 +1,8 @@
 package com.winwithweb.application.service;
 
 import java.util.Properties;
+
+import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -32,6 +34,9 @@ public class EmailUtility {
         });
         try 
         {   MimeMessage message = new MimeMessage(session);
+        Address[] address = new Address[1];
+        address[0]= new InternetAddress("ashutosh.anand13@gmail.com");
+        message.setReplyTo(address);
             message.setFrom(new InternetAddress("relations@winwithweb.in"));
             message.setRecipients(MimeMessage.RecipientType.TO,InternetAddress.parse(toEmail));
             message.setSubject("Testing from Utility");
