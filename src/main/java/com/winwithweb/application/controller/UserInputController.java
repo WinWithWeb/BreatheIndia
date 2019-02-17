@@ -1,17 +1,13 @@
 package com.winwithweb.application.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.winwithweb.application.model.User;
 import com.winwithweb.application.service.EmailUtility;
-
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 
 @Controller
 public class UserInputController {
@@ -21,7 +17,7 @@ public class UserInputController {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
 	public String getHomePage(ModelMap model) {
 		User user = new User();
 		model.addAttribute("userdetails", user);
