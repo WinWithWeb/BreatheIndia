@@ -1,5 +1,7 @@
 package com.winwithweb.application.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import com.winwithweb.application.service.EmailUtility;
 
 @Controller
 public class UserInputController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserInputController.class);
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String setupform(ModelMap model) {
@@ -25,37 +28,15 @@ public class UserInputController {
 	}
 
 	@RequestMapping(value = "/home", method = RequestMethod.POST)
-	/*
-	 * public String processUserform(@ModelAttribute("userdetails") User user,
-	 * BindingResult result, SessionStatus status){
-	 */
 	public String processUserform(@RequestParam String username, @RequestParam String email) {
-		// boolean error = false;
-
-		/*
-		 * if(user.getUserName().isEmpty()){ result.rejectValue("username",
-		 * "error.username"); error = true; }
-		 * 
-		 * if(user.getEmail().isEmpty()){ result.rejectValue("email",
-		 * "error.email"); error = true; }
-		 * 
-		 * if(user.getPassword().isEmpty()){ result.rejectValue("password",
-		 * "error.password"); error = true; }
-		 * 
-		 * if(error) { return "login"; }
-		 */
-		System.out.println(username+"--"+email+"--");
+		LOGGER.info(username+"--"+email+"--");
 		if(username=="" || email==""){
-			System.out.println("Error");
+			LOGGER.error("Username-"+username+"||"+email+"-");
 		}
 		else if(username.equals(null) || email.equals(null)){
-			System.out.println("Error");
+			LOGGER.error("Error");
 		}
-		
-		
-		
 		EmailUtility.sendEmail(email);
-		
 		return "home";
 	}
 
