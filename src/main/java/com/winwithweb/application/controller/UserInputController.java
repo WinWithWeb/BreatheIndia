@@ -32,9 +32,11 @@ public class UserInputController {
 		LOGGER.info(username+"--"+email+"--");
 		if(username=="" || email==""){
 			LOGGER.error("Username-"+username+"||"+email+"-");
+			return "home";
 		}
 		else if(username.equals(null) || email.equals(null)){
 			LOGGER.error("Error");
+			return "home";
 		}
 		EmailUtility.sendEmail(email);
 		return "home";
