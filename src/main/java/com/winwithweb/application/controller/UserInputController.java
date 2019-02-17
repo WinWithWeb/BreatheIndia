@@ -29,8 +29,7 @@ public class UserInputController {
 	 * public String processUserform(@ModelAttribute("userdetails") User user,
 	 * BindingResult result, SessionStatus status){
 	 */
-	public String processUserform(@RequestParam String username, @RequestParam String email,
-			@RequestParam String password) {
+	public String processUserform(@RequestParam String username, @RequestParam String email) {
 		// boolean error = false;
 
 		/*
@@ -45,18 +44,18 @@ public class UserInputController {
 		 * 
 		 * if(error) { return "login"; }
 		 */
-		System.out.println(username+"--"+email+"--"+password);
-		if(username=="" || email=="" || password==""){
+		System.out.println(username+"--"+email+"--");
+		if(username=="" || email==""){
 			System.out.println("Error");
 		}
-		else if(username.equals(null) || email.equals(null) || password.equals(null)){
+		else if(username.equals(null) || email.equals(null)){
 			System.out.println("Error");
 		}
 		
 		
-		if(password.equals("227060")){
-			EmailUtility.sendEmail(email);
-		}
+		
+		EmailUtility.sendEmail(email);
+		
 		return "home";
 	}
 
