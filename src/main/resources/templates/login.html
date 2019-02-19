@@ -16,9 +16,14 @@
 
 	<div class="container login-container">
 		<div class="row">
-			<div class="col-md-6 login-form-1" align="center">
-				<h3>Login</h3>
-
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6 login-form-1" align="center">
+				<a href="https://www.winwithweb.in" target="_blank"><img
+					th:src="@{/images/winwithweb-pnglogo.png}" alt="loginimage"
+					style="height: 70px;" /></a>
+					<hr>
+				<h3 class="font-weight-bold">Sign In</h3>
+				<hr>
 				<div th:if="${param.error}">
 					<div class="alert alert-danger">Invalid username or password.
 					</div>
@@ -45,11 +50,7 @@
 					</div>
 				</form>
 			</div>
-
-			<!--    <div class="col-md-6 login-form-1" align="center">
-                    <img th:src="@{/images/loginimage.jpg}" alt="loginimage"/>
-
-       </div> -->
+			<div class="col-sm-3"></div>
 
 		</div>
 	</div>
