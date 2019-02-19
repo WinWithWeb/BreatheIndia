@@ -20,22 +20,23 @@
 <body>
 
 	<div class="container">
+	<br/>
+	<div class="row">
+	<div class="col-sm-1" align="left">
+	<a href="https://www.winwithweb.in" target="_blank"><img
+					th:src="@{/images/winwithweb-pnglogo.png}" alt="loginimage"
+					style="height: 50px;" /></a>
+	</div>
+	</div>
 		<div class="row">
+		<div class="row">
+		<div class="col-sm-10">
 			<h2>Hello [[${#httpServletRequest.remoteUser}]] ! Please fill
-				the below details</h2>
+				the below details</h2></div>
+				<div class="col-sm-2">
 			<h3>
-				<a th:href="@{/logout}">Sign Out</a>
-			</h3>
-			<!--       <p class="lead">
-            This new pattern transforms Bootstrap's form fields into modern, fun and user-friendly experiences!<br />
-            <small class="text-muted">Learn more about this pattern at <a href="http://bradfrostweb.com/blog/post/float-label-pattern/" target="blank">http://bradfrostweb.com/blog/post/float-label-pattern/</a></small>
-        </p>
-
-        <div class="alert alert-warning">
-            <h4>Missing SELECT Support</h4>
-            This feature does not currently support SELECT tags - I'm still working out a way to make them work with Bootstrap's native examples.
-        </div> -->
-
+				<a th:href="@{/logout}"><button type="button" class="btn btn-danger">Sign Out</button></a>
+			</h3></div>
 			<hr />
 
 			<div class="row">
