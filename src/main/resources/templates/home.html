@@ -2,27 +2,28 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
 <meta charset="ISO-8859-1">
 
-<link rel="stylesheet" th:href="@{/css/home.custom.css}"/>
+<link rel="stylesheet" th:href="@{/css/home.custom.css}" />
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 
 <script type="text/javascript" th:src="@{/js/custom.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 
 <title>WinWithWeb-Configuration</title>
 
 </head>
 <body>
 
-<div class="container">
-    <div class="row">
-        <h2>Hello [[${#httpServletRequest.remoteUser}]] !
-								Please fill the below details </h2>
-								<h3><a th:href="@{/logout}">Sign Out</a></h3>
-   <!--       <p class="lead">
+	<div class="container">
+		<div class="row">
+			<h2>Hello [[${#httpServletRequest.remoteUser}]] ! Please fill
+				the below details</h2>
+			<h3>
+				<a th:href="@{/logout}">Sign Out</a>
+			</h3>
+			<!--       <p class="lead">
             This new pattern transforms Bootstrap's form fields into modern, fun and user-friendly experiences!<br />
             <small class="text-muted">Learn more about this pattern at <a href="http://bradfrostweb.com/blog/post/float-label-pattern/" target="blank">http://bradfrostweb.com/blog/post/float-label-pattern/</a></small>
         </p>
@@ -32,59 +33,59 @@
             This feature does not currently support SELECT tags - I'm still working out a way to make them work with Bootstrap's native examples.
         </div> -->
 
-        <hr />
+			<hr />
 
-        <div class="row">
-            <div class="col-sm-8">
+			<div class="row">
+				<div class="col-sm-8">
 
-                <h4 class="page-header">Fill Form</h4>
-               <form method="post" action="/home">
-                    <div class="form-group float-label-control">
-                        <label for="">Name</label>
-                        <input type="text" name="username" class="form-control" placeholder="Enter Your Name">
-                    </div>
-                    <div class="form-group float-label-control">
-                        <label for="">Emails</label>
-                        <textarea class="form-control" name="email" placeholder="Enter Email id to Send" rows="5"></textarea>
-                    </div>
-                    
-                    
-                      
-                                    <!-- Button -->
+					<h4 class="page-header">Fill Form</h4>
+					<form method="post" action="/home">
+						<div class="form-group float-label-control">
+							<label for="">Name</label> <input type="text" name="username"
+								class="form-control" placeholder="Enter Your Name">
+						</div>
+						<div class="form-group float-label-control">
+							<label for="">Emails</label>
+							<textarea class="form-control" name="email"
+								placeholder="Enter Email id to Send" rows="5"></textarea>
+						</div>
 
-                                    <div class="col-sm-12 controls">
-                                      
-                                      <input type="submit" name="" class="btn btn-success" value="Send Email">
-                                     
 
-                                    </div>
-                                
-                    
-    
-                    
-                    
-                </form>
-                
-            </div>
-            <div class="col-sm-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Steps
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul>
-                            <li>Enter  name</li>
-                            <li>Send Emails where you want to send email</li>
-                            <li>Click on Send Email button</li>
-                            
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+						<!-- Button -->
+
+						<div class="col-sm-12 controls">
+
+							<input type="submit" name="" class="btn btn-success"
+								value="Send Email">
+
+
+						</div>
+
+
+
+
+
+					</form>
+
+				</div>
+				<div class="col-sm-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Steps</h3>
+						</div>
+						<div class="panel-body">
+							<ul>
+								<li>Enter name</li>
+								<li>Send Emails where you want to send email</li>
+								<li>Click on Send Email button</li>
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
