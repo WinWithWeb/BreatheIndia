@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * @author sachingoyal
  *
  */
+@SuppressWarnings("unused")
 public class BcryptGenerator {
 	
 
