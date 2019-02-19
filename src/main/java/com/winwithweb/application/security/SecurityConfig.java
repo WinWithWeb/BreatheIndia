@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
         .authorizeRequests()
+        .antMatchers("/css/**","/js/**","/images/**").permitAll()
 			.antMatchers("/home/**").hasAnyRole("USER")
 			.anyRequest().authenticated()
         .and()
@@ -52,7 +53,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.inMemoryAuthentication().passwordEncoder(passwordEncoder())
 				.withUser("user").password("$2a$10$qO1gCcubvoHMXI3SBLgLJu3FnmGM96ANGQaBSC9dlkLCUWgkVUOFK").roles("USER");
 	}
-	
-	
 
 }
