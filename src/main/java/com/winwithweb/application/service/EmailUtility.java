@@ -10,13 +10,14 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.winwithweb.application.model.EmailConfigurations;
 import com.winwithweb.application.model.EmailDetails;
 
 public class EmailUtility {
 
-	public static void sendEmail(EmailDetails emaildata) {
+	public static void sendEmail(EmailDetails emaildata,EmailConfigurations emailconfig) {
 		Properties properties = new Properties();
-        properties.setProperty("mail.smtp.host", "smtp.zoho.com");
+        properties.setProperty("mail.smtp.host", emailconfig.gethostname());
         properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         properties.setProperty("mail.smtp.socketFactory.fallback", "false");
         properties.setProperty("mail.smtp.port", "465");
@@ -31,15 +32,15 @@ public class EmailUtility {
         Session session = Session.getDefaultInstance(properties,new javax.mail.Authenticator() 
         {   @Override
             protected PasswordAuthentication getPasswordAuthentication() 
-            {   return new PasswordAuthentication("relations@winwithweb.in","Anand227060@");
+            {   return new PasswordAuthentication(emailconfig.getsenderemail(),emailconfig.getsenderemailpassword());
             }
         });
         try 
         {   MimeMessage message = new MimeMessage(session);
         Address[] address = new Address[1];
-        address[0]= new InternetAddress("ashutosh.anand13@gmail.com");
+        address[0]= new InternetAddress(emailconfig.getsetReplyto());
         message.setReplyTo(address);
-            message.setFrom(new InternetAddress("relations@winwithweb.in"));
+            message.setFrom(new InternetAddress(emailconfig.getsenderemail()));
             message.setRecipients(MimeMessage.RecipientType.TO,InternetAddress.parse(emaildata.getRecepientemailIds()));
             message.setSubject(emaildata.getEmailsubject());
             message.setText(emaildata.getEmailcontent());
