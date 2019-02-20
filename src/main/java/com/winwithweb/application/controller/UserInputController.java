@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.winwithweb.application.model.EmailConfigurations;
 import com.winwithweb.application.model.EmailDetails;
-import com.winwithweb.application.service.EmailUtility;
+import com.winwithweb.application.threading.SendEmail;
 
 @Controller
 public class UserInputController {
@@ -36,7 +36,11 @@ public class UserInputController {
 		LOGGER.info(emaildata.toString());
 		LOGGER.info(emailProperties.toString());
 		model.addAttribute("emaildata", new EmailDetails());
-		EmailUtility.sendEmail(emaildata,emailProperties);
+		
+		//Start Email sending on new Thread
+		Runnable r = new SendEmail(emaildata,emailProperties);
+		new Thread(r).start();
+	
 		return "home";
 	}
 
