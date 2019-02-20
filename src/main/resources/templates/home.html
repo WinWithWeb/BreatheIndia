@@ -47,6 +47,9 @@
 
 		<div class="row">
 			<div class="col-sm-8">
+			
+			<div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}">
+				</div>
 
 				<h4 class="page-header">Start Sending Bulk Emails</h4>
 				<form method="post" th:object="${emaildata}" th:action="@{/home}">
@@ -83,9 +86,6 @@
 							value="Send Email">
 					</div>
 				</form>
-				<br/>
-				<div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}">
-				</div>
 
 			</div>
 			<div class="col-sm-4">
