@@ -10,9 +10,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.winwithweb.application.model.EmailDetails;
+
 public class EmailUtility {
 
-	public static void sendEmail(String toEmail) {
+	public static void sendEmail(EmailDetails emaildata) {
 		Properties properties = new Properties();
         properties.setProperty("mail.smtp.host", "smtp.zoho.com");
         properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -38,9 +40,9 @@ public class EmailUtility {
         address[0]= new InternetAddress("ashutosh.anand13@gmail.com");
         message.setReplyTo(address);
             message.setFrom(new InternetAddress("relations@winwithweb.in"));
-            message.setRecipients(MimeMessage.RecipientType.TO,InternetAddress.parse(toEmail));
-            message.setSubject("Testing from Utility");
-            message.setText("Hi \nHow are you \nI'm mailing this from the Email Sender Utility. \nPlease let me know where is this email landing by replying me at ashutosh.anand13@gmail.com");
+            message.setRecipients(MimeMessage.RecipientType.TO,InternetAddress.parse(emaildata.getRecepientemailIds()));
+            message.setSubject(emaildata.getEmailsubject());
+            message.setText(emaildata.getEmailcontent());
             Transport.send(message);
         } 
         catch (MessagingException e) 
