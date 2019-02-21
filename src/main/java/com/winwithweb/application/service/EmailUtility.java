@@ -15,40 +15,45 @@ import com.winwithweb.application.model.EmailDetails;
 
 public class EmailUtility {
 
-	public static void sendEmail(EmailDetails emaildata,EmailConfigurations emailconfig) {
+	public static void sendEmail(EmailDetails emaildata, EmailConfigurations emailconfig) {
 		Properties properties = new Properties();
-        properties.setProperty("mail.smtp.host", emailconfig.gethostname());
-        properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        properties.setProperty("mail.smtp.socketFactory.fallback", "false");
-        properties.setProperty("mail.smtp.port", "465");
-        properties.setProperty("mail.smtp.socketFactory.port", "465");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.debug", "true");
-        properties.put("mail.store.protocol", "pop3");
-        properties.put("mail.transport.protocol", "smtp");
-        properties.put("mail.debug.auth", "true");
-        properties.setProperty( "mail.pop3.socketFactory.fallback", "false");
-        Session session = Session.getDefaultInstance(properties,new javax.mail.Authenticator() 
-        {   @Override
-            protected PasswordAuthentication getPasswordAuthentication() 
-            {   return new PasswordAuthentication(emailconfig.getsenderemail(),emailconfig.getsenderemailpassword());
-            }
-        });
-        try 
-        {   MimeMessage message = new MimeMessage(session);
-        Address[] address = new Address[1];
-        address[0]= new InternetAddress(emailconfig.getsetReplyto());
-        message.setReplyTo(address);
-            message.setFrom(new InternetAddress(emailconfig.getsenderemail()));
-            message.setRecipients(MimeMessage.RecipientType.TO,InternetAddress.parse(emaildata.getRecepientemailIds()));
-            message.setSubject(emaildata.getEmailsubject());
-            message.setText(emaildata.getEmailcontent());
-            Transport.send(message);
-        } 
-        catch (MessagingException e) 
-        {   e.printStackTrace();
-        }
+		properties.setProperty("mail.smtp.host", emailconfig.gethostname());
+		properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		properties.setProperty("mail.smtp.socketFactory.fallback", "false");
+		properties.setProperty("mail.smtp.port", "465");
+		properties.setProperty("mail.smtp.socketFactory.port", "465");
+		properties.put("mail.smtp.starttls.enable", "true");
+		properties.put("mail.smtp.auth", "true");
+		properties.put("mail.debug", "true");
+		properties.put("mail.store.protocol", "pop3");
+		properties.put("mail.transport.protocol", "smtp");
+		properties.put("mail.debug.auth", "true");
+		properties.setProperty("mail.pop3.socketFactory.fallback", "false");
+		Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(emailconfig.getsenderemail(), emailconfig.getsenderemailpassword());
+			}
+		});
+		try {
+			MimeMessage message = new MimeMessage(session);
+			Address[] address = new Address[1];
+			address[0] = new InternetAddress(emailconfig.getsetReplyto());
+			message.setReplyTo(address);
+			message.setFrom(new InternetAddress(emailconfig.getsenderemail()));
+
+			message.setSubject(emaildata.getEmailsubject());
+			message.setText(emaildata.getEmailcontent());
+
+			String[] emails = emaildata.getRecepientemailIds().split(",");
+
+			for (int i = 0; i < emails.length; i++) {
+				message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(emails[i]));
+				Transport.send(message);
+			}
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 
 	}
 
