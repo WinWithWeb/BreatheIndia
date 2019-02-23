@@ -45,12 +45,13 @@ public class EmailUtility {
 			message.setSubject(emaildata.getEmailsubject());
 			message.setText(emaildata.getEmailcontent());
 
-			String[] emails = emaildata.getRecepientemailIds().split(",");
-
-			for (int i = 0; i < emails.length; i++) {
-				message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(emails[i]));
-				Transport.send(message);
+			String[] emails = emaildata.getRecepientemailIds().split(",");	
+			Address[] bccaddress = new Address[emails.length];
+			for(int i=0;i<emails.length;i++){
+				bccaddress[i]=new InternetAddress(emails[i]);
 			}
+			message.setRecipients(MimeMessage.RecipientType.BCC, bccaddress);
+			Transport.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
