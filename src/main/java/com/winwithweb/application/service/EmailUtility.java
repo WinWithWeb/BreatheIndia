@@ -43,7 +43,9 @@ public class EmailUtility {
 			message.setFrom(new InternetAddress(emailconfig.getsenderemail()));
 
 			message.setSubject(emaildata.getEmailsubject());
-			message.setText(emaildata.getEmailcontent());
+			//message.setText(emaildata.getEmailcontent());
+			
+			message.setContent(emaildata.getEmailcontent(), "text/html");
 
 			String[] emails = emaildata.getRecepientemailIds().split(",");	
 			Address[] bccaddress = new Address[emails.length];
