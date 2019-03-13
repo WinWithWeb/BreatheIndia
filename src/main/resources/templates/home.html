@@ -19,8 +19,26 @@
 <script type="text/javascript" th:src="@{/js/editor.js}"></script>
 <script type="text/javascript" th:src="@{/js/replaceState.js}"></script>
 <script>
+var settings = {
+        'indent': false,
+        'outdent': false,
+        'print': false,
+        'rm_format': false,
+        'print': false,
+        'rm_format':false,
+        'status_bar':false,
+        'insert_table':false,
+        'select_all':false,
+        'togglescreen':false,
+        'insert_img':false,
+        'hr_line':false,
+        'block_quote':false,
+        'source':false,
+        'strikeout':false,
+        'splchars':false
+      }        
 			$(document).ready(function() {
-				$("#txtEditor").Editor();
+				$("#txtEditor").Editor(settings);
 			});
 		</script>
 
