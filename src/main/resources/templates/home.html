@@ -6,14 +6,43 @@
 
 
 <script type="text/javascript" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 
 
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/css/home.custom.css}" />
+<link rel="stylesheet" th:href="@{/css/editor.css}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
 <script type="text/javascript" th:src="@{/js/custom.js}"></script>
+<script type="text/javascript" th:src="@{/js/editor.js}"></script>
 <script type="text/javascript" th:src="@{/js/replaceState.js}"></script>
+<script>
+var settings = {
+        'indent': false,
+        'outdent': false,
+        'print': false,
+        'rm_format': false,
+        'print': false,
+        'rm_format':false,
+        'status_bar':false,
+        'insert_table':false,
+        'select_all':false,
+        'togglescreen':false,
+        'insert_img':false,
+        'hr_line':false,
+        'block_quote':false,
+        'source':false,
+        'strikeout':false,
+        'splchars':false,
+        'insert_link':false,
+        'unlink':false
+      }        
+			$(document).ready(function() {
+				$("#txtEditor").Editor(settings);
+			});
+		</script>
 
 <title>WinWithWeb-Configuration</title>
 
@@ -63,27 +92,22 @@
 						<textarea class="form-control" th:field="*{recepientemailIds}"
 							placeholder="Enter Email id to Send" rows="3" required="required"></textarea>
 					</div>
-					<!-- <div class="form-group float-label-control">
-						<label for="">CC</label> <input type="email" th:field="*{emailcc}"
-							class="form-control" placeholder="Enter Your CC Email">
-					</div>
-					<div class="form-group float-label-control">
-						<label for="">BCC</label> <input type="email" th:field="*{emailbcc}"
-							class="form-control" placeholder="Enter Your BCC Email">
-					</div> -->
 					<div class="form-group float-label-control">
 						<label for="">Subject</label> <input type="text" th:field="*{emailsubject}"
 							class="form-control" placeholder="Enter Email Subject" required="required">
 					</div>
+					
 					<div class="form-group float-label-control">
 						<label for="">Content Of the Email</label>
-						<textarea class="form-control"  th:field="*{emailcontent}"
-							placeholder="Enter Email Content" rows="5" required="required"></textarea>
+						<textarea id="txtEditor"></textarea>
+						<input type="hidden" id="hiddenEmailContent" th:field="*{emailcontent}" >
+						<!-- <textarea class="form-control"  th:field="*{emailcontent}"
+							placeholder="Enter Email Content" rows="5" required="required"></textarea> -->
 					</div>
 
 					<div class="col-sm-12 controls">
 
-						<input type="submit" name="" class="btn btn-success"
+						<input type="submit" onclick="loadEmailContent();" name="" class="btn btn-success"
 							value="Send Email">
 					</div>
 				</form>
@@ -108,4 +132,10 @@
 
 	</div>
 </body>
+<script type="text/javascript">
+function loadEmailContent(){
+	var data=$("#txtEditor").Editor("getText");
+	document.getElementById("hiddenEmailContent").value=data;
+	//alert($("#txtEditor").Editor("getText"));
+}</script>
 </html>
