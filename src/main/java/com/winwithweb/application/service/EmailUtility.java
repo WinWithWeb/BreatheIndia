@@ -17,7 +17,7 @@ public class EmailUtility {
 
 	public static void sendEmail(EmailDetails emaildata, EmailConfigurations emailconfig) {
 		Properties properties = new Properties();
-		properties.setProperty("mail.smtp.host", emailconfig.gethostname());
+		properties.setProperty("mail.smtps.host", emailconfig.gethostname());
 		properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		properties.setProperty("mail.smtp.socketFactory.fallback", "false");
 		properties.setProperty("mail.smtp.port", "465");
