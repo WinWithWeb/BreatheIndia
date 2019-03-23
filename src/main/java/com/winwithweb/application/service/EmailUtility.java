@@ -20,8 +20,8 @@ public class EmailUtility {
 		properties.setProperty("mail.smtp.host", emailconfig.gethostname());
 		properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		properties.setProperty("mail.smtp.socketFactory.fallback", "false");
-		properties.setProperty("mail.smtp.port", "587");
-		properties.setProperty("mail.smtp.socketFactory.port", "587");
+		properties.setProperty("mail.smtp.port", "465");
+		properties.setProperty("mail.smtp.socketFactory.port", "465");
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.put("mail.smtp.auth", "true");
 		properties.put("mail.debug", "true");
