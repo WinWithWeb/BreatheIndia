@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 			.inMemoryAuthentication().passwordEncoder(passwordEncoder())
-				.withUser("admin@smartsolindia.in").password("$2a$10$cINWKtMnofvuAgAR.yppSuQUSl3AqBLAMcovGM43QlQf2GfVeYCE6").roles("USER");
+			.withUser("user").password("$2a$10$qO1gCcubvoHMXI3SBLgLJu3FnmGM96ANGQaBSC9dlkLCUWgkVUOFK").roles("USER");
 	}
 
 }
