@@ -1,4 +1,4 @@
-package com.winwithweb.winwithwebconfig;
+package in.winwithweb.winwithwebconfig;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
