@@ -31,7 +31,7 @@ public class HomeController {
 		
 		
 		
-		return "homeDemo";
+		return "home";
 	}
 
 }
