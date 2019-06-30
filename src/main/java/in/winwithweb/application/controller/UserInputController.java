@@ -1,4 +1,4 @@
-package com.winwithweb.application.controller;
+package in.winwithweb.application.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
