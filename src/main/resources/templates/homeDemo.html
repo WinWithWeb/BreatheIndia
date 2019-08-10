@@ -32,6 +32,7 @@ function sendAjaxRequest() {
     var state = $("#state").val();
     $.get( "/getCitiesData?state=" + state, function( data ) {
         $("#region").empty();
+        $("#station").empty();
         data.forEach(function(item) {
             var option = "<option th:value = " + item + ">" + item +   "</option>";
             $("#region").append(option);
@@ -88,16 +89,19 @@ function getStationData() {
 		<div class="form-group">
 
 			<p>Select City</p>
+
 			<select th:field="*{region}" id="region">
+
 
 			</select>
 
 		</div>
-		
+
 		<div class="form-group">
 
 			<p>Select Station</p>
 			<select th:field="*{station}" id="station">
+
 
 			</select>
 
@@ -125,6 +129,8 @@ function getStationData() {
 				<th>Pollutant Min</th>
 				<th>Pollutant Max</th>
 				<th>Pollutant Average</th>
+				<th>Last Updated</th>
+
 
 
 			</tr>
@@ -139,6 +145,10 @@ function getStationData() {
 				<td data-th-text="${record.pollutant_min}"></td>
 				<td data-th-text="${record.pollutant_max}"></td>
 				<td data-th-text="${record.pollutant_avg}"></td>
+				<td data-th-text="${record.last_update}"></td>
+
+
+
 			</tr>
 		</tbody>
 	</table>

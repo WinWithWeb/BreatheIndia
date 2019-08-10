@@ -23,7 +23,7 @@ public class Record {
     private String station;
     @SerializedName("last_update")
     @Expose
-    private String lastUpdate;
+    private String last_update;
    
     @SerializedName("pollutant_id")
     @Expose
@@ -101,17 +101,18 @@ public class Record {
 	public void setStation(String station) {
 		this.station = station;
 	}
+	
 	/**
-	 * @return the lastUpdate
+	 * @return the last_update
 	 */
-	public String getLastUpdate() {
-		return lastUpdate;
+	public String getLast_update() {
+		return last_update;
 	}
 	/**
-	 * @param lastUpdate the lastUpdate to set
+	 * @param last_update the last_update to set
 	 */
-	public void setLastUpdate(String lastUpdate) {
-		this.lastUpdate = lastUpdate;
+	public void setLast_update(String last_update) {
+		this.last_update = last_update;
 	}
 	/**
 	 * @return the pollutant_id

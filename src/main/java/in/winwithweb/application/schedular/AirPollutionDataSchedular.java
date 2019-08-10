@@ -74,6 +74,7 @@ public class AirPollutionDataSchedular {
 			List<Record> recordList = data.getRecords();
 			states = new ArrayList<String>();
 			region = new HashMap<String, List<String>>();
+			stationMap = new HashMap<String, List<String>>();
 			for (Record record : recordList) {
 				if (!states.contains(record.getState())) {
 					states.add(record.getState());
@@ -87,17 +88,23 @@ public class AirPollutionDataSchedular {
 					}
 				} else {
 					List<String> cityList = new ArrayList<String>();
+					cityList.add("Select");
+
 					cityList.add(record.getCity());
+					
 					region.put(record.getState(), cityList);
 				}
 				
 				if (stationMap.containsKey(record.getCity())) {
 					List<String> station = stationMap.get(record.getCity());
 					if (!station.contains(record.getStation())) {
+
 						station.add(record.getStation());
 					}
 				} else {
 					List<String> stationList = new ArrayList<String>();
+					stationList.add("Select");
+
 					stationList.add(record.getStation());
 					stationMap.put(record.getCity(), stationList);
 				}
