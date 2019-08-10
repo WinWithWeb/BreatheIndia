@@ -17,20 +17,13 @@ public class HomeController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String getHomePage(Model model) {
 		Sample data = AirPollutionDataSchedular.getData();
-		
+
 		if (data != null) {
 			List<Record> record = data.getRecords();
 			if (record != null && !record.isEmpty()) {
-				for (Record rec : record) {
-					model.addAttribute("sachin", rec.toString());
-				}
+				model.addAttribute("recordList", record);
 			}
-
 		}
-		
-		
-		
-		
 		return "homeDemo";
 	}
 
