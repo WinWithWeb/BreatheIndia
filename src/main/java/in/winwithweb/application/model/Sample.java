@@ -272,4 +272,17 @@ public class Sample {
         this.version = version;
     }
 
+	@Override
+	public String toString() {
+		return "Sample [indexName=" + indexName + ", title=" + title + ", desc=" + desc + ", orgType=" + orgType
+				+ ", org=" + org + ", sector=" + sector + ", source=" + source + ", catalogUuid=" + catalogUuid
+				+ ", visualizable=" + visualizable + ", active=" + active + ", created=" + created + ", updated="
+				+ updated + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", targetBucket="
+				+ targetBucket + ", field=" + field + ", status=" + status + ", message=" + message + ", total=" + total
+				+ ", count=" + count + ", limit=" + limit + ", offset=" + offset + ", records=" + records + ", version="
+				+ version + "]";
+	}
+    
+    
+
 }
