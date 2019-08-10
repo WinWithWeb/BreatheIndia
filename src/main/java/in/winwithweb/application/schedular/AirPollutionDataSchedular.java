@@ -88,7 +88,7 @@ public class AirPollutionDataSchedular {
 					}
 				} else {
 					List<String> cityList = new ArrayList<String>();
-					cityList.add("Select");
+					cityList.add("Select City");
 
 					cityList.add(record.getCity());
 					
@@ -103,7 +103,7 @@ public class AirPollutionDataSchedular {
 					}
 				} else {
 					List<String> stationList = new ArrayList<String>();
-					stationList.add("Select");
+					stationList.add("Select Station");
 
 					stationList.add(record.getStation());
 					stationMap.put(record.getCity(), stationList);
