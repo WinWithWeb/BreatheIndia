@@ -33,9 +33,8 @@ public class AirPollutionDataSchedular {
 	private static List<String> states = new ArrayList<String>();
 
 	private static Map<String, List<String>> region = new HashMap<String, List<String>>();
-	
-	private static Map<String, List<String>> stationMap = new HashMap<String, List<String>>();
 
+	private static Map<String, List<String>> stationMap = new HashMap<String, List<String>>();
 
 	private RestTemplate getRestTemplate() {
 		if (restTemplate == null) {
@@ -61,9 +60,22 @@ public class AirPollutionDataSchedular {
 	public static List<String> getCity(String stateName) {
 		return region.get(stateName);
 	}
-	
+
 	public static List<String> getStation(String city) {
 		return stationMap.get(city);
+	}
+
+	public static Record getPollutionData(String region) {
+		Record recordq = new Record();
+		List<Record> recordList = data.getRecords();
+		for (Record record : recordList) {
+			if (region.equalsIgnoreCase(record.getStation())) {
+				recordq = record;
+			}
+		}
+
+		return recordq;
+
 	}
 
 	@Scheduled(cron = "0/10 * * * * ?")
@@ -91,10 +103,10 @@ public class AirPollutionDataSchedular {
 					cityList.add("Select City");
 
 					cityList.add(record.getCity());
-					
+
 					region.put(record.getState(), cityList);
 				}
-				
+
 				if (stationMap.containsKey(record.getCity())) {
 					List<String> station = stationMap.get(record.getCity());
 					if (!station.contains(record.getStation())) {
@@ -103,7 +115,7 @@ public class AirPollutionDataSchedular {
 					}
 				} else {
 					List<String> stationList = new ArrayList<String>();
-					stationList.add("Select Station");
+					stationList.add("Select Region");
 
 					stationList.add(record.getStation());
 					stationMap.put(record.getCity(), stationList);

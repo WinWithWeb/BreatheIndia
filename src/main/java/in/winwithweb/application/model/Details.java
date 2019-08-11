@@ -55,4 +55,11 @@ public class Details {
 		this.station = station;
 	}
 
+	@Override
+	public String toString() {
+		return "Details [state=" + state + ", region=" + region + ", station=" + station + "]";
+	}
+	
+	
+
 }
