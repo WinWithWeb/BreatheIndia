@@ -29,10 +29,15 @@ public class HomeController {
 
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String getHomePage(Model model) {
-		
-		AirPollutionDataSchedular abc = new AirPollutionDataSchedular();
-				abc.cronJobSch();
+
 		Sample data = AirPollutionDataSchedular.getData();
+
+		if (data == null) {
+			AirPollutionDataSchedular abc = new AirPollutionDataSchedular();
+			abc.cronJobSch();
+			data = AirPollutionDataSchedular.getData();
+
+		}
 
 		if (data != null) {
 			List<Record> record = data.getRecords();
@@ -80,7 +85,6 @@ public class HomeController {
 		} else {
 			model.addAttribute("city", "acb");
 			model.addAttribute("station", details.getStation());
-
 
 			System.out.println(details.toString());
 
