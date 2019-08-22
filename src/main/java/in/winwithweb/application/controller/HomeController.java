@@ -55,7 +55,7 @@ public class HomeController {
 
 			}
 		}
-		return "displayData";
+		return "home";
 	}
 
 	@RequestMapping(value = "/getPollutionData", method = RequestMethod.POST)
