@@ -29,6 +29,9 @@ public class HomeController {
 
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String getHomePage(Model model) {
+		
+		AirPollutionDataSchedular abc = new AirPollutionDataSchedular();
+				abc.cronJobSch();
 		Sample data = AirPollutionDataSchedular.getData();
 
 		if (data != null) {
@@ -47,7 +50,7 @@ public class HomeController {
 
 			}
 		}
-		return "index";
+		return "displayData";
 	}
 
 	@RequestMapping(value = "/getPollutionData", method = RequestMethod.POST)

@@ -231,6 +231,41 @@ p a:hover {
 </script>
 
 <script type="text/javascript">
+	$(document).ready(function() {
+		$("#station").change(function() {
+			google.charts.load('current', {
+				'packages' : [ 'bar' ]
+			});
+			google.charts.setOnLoadCallback(drawChart);
+
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable([
+						[ 'Pollutant Id', 'Pollutant Min', 'Pollutant Max',
+								'Pollutant Avg' ], [ 'PM2.5', 15, 43, 26 ],
+						[ 'PM10', 26, 59, 46 ], [ 'NO2', 4, 32, 11 ],
+						[ 'NH3', 1, 2, 2 ], [ 'SO2', 2, 60, 28 ],
+						[ 'CO2', 14, 119, 34 ], [ 'OZONE', 11, 57, 43 ] ]);
+
+				var options = {
+					chart : {
+						title : 'City : Amaravati',
+						subtitle : 'Region : Secretariat, Amaravati - APPCB (Last Updated : 11-08-2019 07:00:00)',
+					},
+					bars : 'horizontal' // Required for Material Bar Charts.
+				};
+
+				var chart = new google.charts.Bar(document
+						.getElementById('barchart_material'));
+
+				chart.draw(data, google.charts.Bar.convertOptions(options));
+				
+				
+			}
+			});
+	});
+</script>
+
+<script type="text/javascript">
 	function sendAjaxRequest() {
 		var state = $("#state").val();
 		$.get("/getCitiesData?state=" + state, function(data) {
@@ -269,34 +304,7 @@ p a:hover {
 </script>
 
 
-<script type="text/javascript">
-	google.charts.load('current', {
-		'packages' : [ 'bar' ]
-	});
-	google.charts.setOnLoadCallback(drawChart);
 
-	function drawChart() {
-		var data = google.visualization.arrayToDataTable([
-				[ 'Pollutant Id', 'Pollutant Min', 'Pollutant Max',
-						'Pollutant Avg' ], [ 'PM2.5', 15, 43, 26 ],
-				[ 'PM10', 26, 59, 46 ], [ 'NO2', 4, 32, 11 ],
-				[ 'NH3', 1, 2, 2 ], [ 'SO2', 2, 60, 28 ],
-				[ 'CO2', 14, 119, 34 ], [ 'OZONE', 11, 57, 43 ] ]);
-
-		var options = {
-			chart : {
-				title : 'City : Amaravati',
-				subtitle : 'Region : Secretariat, Amaravati - APPCB (Last Updated : 11-08-2019 07:00:00)',
-			},
-			bars : 'horizontal' // Required for Material Bar Charts.
-		};
-
-		var chart = new google.charts.Bar(document
-				.getElementById('barchart_material'));
-
-		chart.draw(data, google.charts.Bar.convertOptions(options));
-	}
-</script>
 
 
 
@@ -357,14 +365,8 @@ p a:hover {
 
 
 						</select></td>
-						<td></td>
 						
-						<td>
-
-								<button type="submit" class="btn btn-primary btn-block">Submit Details
-								</button>
-							
-						</td>
+					
 
 
 					</tr>
