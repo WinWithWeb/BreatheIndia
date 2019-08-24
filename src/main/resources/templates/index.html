@@ -13,15 +13,11 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-<script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
-	
-	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 
 
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-
-
 
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
@@ -231,61 +227,6 @@ p a:hover {
 </script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#station").change(function() {
-			google.charts.load('current', {
-				'packages' : [ 'bar' ]
-			});
-			google.charts.setOnLoadCallback(drawChart);
-
-			function drawChart() {
-				
-				var station = $("#station").val();
-				var city = $("#region").val();
-
-
-				
-				$.ajax({
-					type : "GET",
-					contentType : "application/json",
-					url : "getPollutionData?station=" + station,
-					dataType : 'json',				
-					success : function(data) {
-						
-						var chartData = JSON.parse(JSON.stringify(data));
-						
-						var data = google.visualization.arrayToDataTable([
-								[ 'Pollutant Id', 'Pollutant Min', 'Pollutant Max',
-										'Pollutant Avg' ], [chartData[0].pollutionId, chartData[0].pollutionMin, chartData[0].pollutionMax, chartData[0].pollutionAvg ],
-								[ chartData[1].pollutionId, chartData[1].pollutionMin, chartData[1].pollutionMax, chartData[1].pollutionAvg ],
-								[ chartData[2].pollutionId, chartData[2].pollutionMin, chartData[2].pollutionMax, chartData[2].pollutionAvg ],
-								[ chartData[3].pollutionId, chartData[3].pollutionMin, chartData[3].pollutionMax, chartData[3].pollutionAvg ],
-								[ chartData[4].pollutionId, chartData[4].pollutionMin, chartData[4].pollutionMax, chartData[4].pollutionAvg ],
-								[ chartData[5].pollutionId, chartData[5].pollutionMin, chartData[5].pollutionMax, chartData[5].pollutionAvg ],
-								[ chartData[6].pollutionId, chartData[6].pollutionMin, chartData[6].pollutionMax, chartData[6].pollutionAvg ]]);
-
-						var options = {
-							chart : {
-								title : 'City : ' + city,
-								subtitle : 'Region : ' + station + ' | Last Updated : ' + chartData[0].lastUpdated,
-							},
-							bars : 'horizontal' // Required for Material Bar Charts.
-						};
-
-						var chart = new google.charts.Bar(document
-								.getElementById('barchart_material'));
-
-						chart.draw(data, google.charts.Bar.convertOptions(options));
-						
-						
-					}
-					});
-					}
-				});
-			});
-</script>
-
-<script type="text/javascript">
 	function sendAjaxRequest() {
 		var state = $("#state").val();
 		$.get("/getCitiesData?state=" + state, function(data) {
@@ -325,16 +266,15 @@ p a:hover {
 
 
 
-
-
-
 <title>Real Time Pollution Data</title>
 
 </head>
 
 <body>
 
-<div class="row">
+
+
+	<div class="row">
 
 		<div class="col-sm-3"></div>
 		<div class="col-sm-6">
@@ -385,8 +325,14 @@ p a:hover {
 
 
 						</select></td>
+						<td></td>
 						
-					
+						<td>
+
+								<button type="submit" class="btn btn-primary btn-block">Submit Details
+								</button>
+							
+						</td>
 
 
 					</tr>
@@ -396,16 +342,6 @@ p a:hover {
 
 		</div>
 	</div>
-
-	<div class="row">
-
-		<div class="col-sm-3"></div>
-		<div class="col-sm-6">
-
-			<div id="barchart_material" style="width: 900px; height: 500px;"></div>
-		</div>
-	</div>
-
 
 </body>
 </html>
