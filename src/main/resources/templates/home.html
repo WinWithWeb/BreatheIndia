@@ -5,6 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <head>
+
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script type="text/javascript"
@@ -17,323 +18,39 @@
 	src="https://www.gstatic.com/charts/loader.js"></script>
 	
 	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-
+	
 
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-
+<link rel="stylesheet" th:href="@{/css/custom.css}" />
 
 
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-
-<style type="text/css">
-@import "compass/css3";
-
-@import "compass";
-
-@import url("https://fonts.googleapis.com/css?family=Lato");
-
-$
-background: #e74c3c ; $select-color: #fff ; $select-background: #c0392b 
-	 ; $select-width: 220px ; $select-height: 40px ; body {
-	font-family: Lato, Arial;
-	color: #fff;
-	padding: 20px;
-	background-color: #e74c3c;
-}
-
-h1 {
-	font-weight: normal;
-	font-size: 40px;
-	font-weight: normal;
-	text-transform: uppercase;
-}
-
-h1 span {
-	font-size: 13px;
-	display: block;
-	padding-left: 4px;
-}
-
-p {
-	margin-top: 200px;
-}
-
-p a {
-	text-transform: uppercase;
-	text-decoration: none;
-	display: inline-block;
-	color: #fff;
-	padding: 5px 10px;
-	margin: 0 5px;
-	background-color: #b83729;
-	-moz-transition: all 0.2s ease-in;
-	-o-transition: all 0.2s ease-in;
-	-webkit-transition: all 0.2s ease-in;
-	transition: all 0.2s ease-in;
-}
-
-p a:hover {
-	background-color: #ab3326;
-}
-
-.select-hidden {
-	display: none;
-	visibility: hidden;
-	padding-right: 10px;
-}
-
-.select {
-	cursor: pointer;
-	display: inline-block;
-	position: relative;
-	font-size: 16px;
-	color: #fff;
-	width: 220px;
-	height: 40px;
-}
-
-.select-styled {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background-color: #c0392b;
-	padding: 8px 15px;
-	-moz-transition: all 0.2s ease-in;
-	-o-transition: all 0.2s ease-in;
-	-webkit-transition: all 0.2s ease-in;
-	transition: all 0.2s ease-in;
-}
-
-.select-styled:after {
-	content: "";
-	width: 0;
-	height: 0;
-	border: 7px solid transparent;
-	border-color: #fff transparent transparent transparent;
-	position: absolute;
-	top: 16px;
-	right: 10px;
-}
-
-.select-styled:hover {
-	background-color: #b83729;
-}
-
-.select-styled:active, .select-styled.active {
-	background-color: #ab3326;
-}
-
-.select-styled:active:after, .select-styled.active:after {
-	top: 9px;
-	border-color: transparent transparent #fff transparent;
-}
-
-.select-options {
-	display: none;
-	position: absolute;
-	top: 100%;
-	right: 0;
-	left: 0;
-	z-index: 999;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	background-color: #ab3326;
-}
-
-.select-options li {
-	margin: 0;
-	padding: 12px 0;
-	text-indent: 15px;
-	border-top: 1px solid #962d22;
-	-moz-transition: all 0.15s ease-in;
-	-o-transition: all 0.15s ease-in;
-	-webkit-transition: all 0.15s ease-in;
-	transition: all 0.15s ease-in;
-}
-
-.select-options li:hover {
-	color: #c0392b;
-	background: #fff;
-}
-
-.select-options li[rel="hide"] {
-	display: none;
-}
-</style>
-
-<script type="text/javascript">
-	/*
-	 Reference: http://jsfiddle.net/BB3JK/47/
-	 */
-
-	$('select').each(
-			function() {
-				var $this = $(this), numberOfOptions = $(this).children(
-						'option').length;
-
-				$this.addClass('select-hidden');
-				$this.wrap('<div class="select"></div>');
-				$this.after('<div class="select-styled"></div>');
-
-				var $styledSelect = $this.next('div.select-styled');
-				$styledSelect.text($this.children('option').eq(0).text());
-
-				var $list = $('<ul />', {
-					'class' : 'select-options'
-				}).insertAfter($styledSelect);
-
-				for (var i = 0; i < numberOfOptions; i++) {
-					$('<li />', {
-						text : $this.children('option').eq(i).text(),
-						rel : $this.children('option').eq(i).val()
-					}).appendTo($list);
-				}
-
-				var $listItems = $list.children('li');
-
-				$styledSelect.click(function(e) {
-					e.stopPropagation();
-					$('div.select-styled.active').not(this).each(
-							function() {
-								$(this).removeClass('active').next(
-										'ul.select-options').hide();
-							});
-					$(this).toggleClass('active').next('ul.select-options')
-							.toggle();
-				});
-
-				$listItems.click(function(e) {
-					e.stopPropagation();
-					$styledSelect.text($(this).text()).removeClass('active');
-					$this.val($(this).attr('rel'));
-					$list.hide();
-					//console.log($this.val());
-				});
-
-				$(document).click(function() {
-					$styledSelect.removeClass('active');
-					$list.hide();
-				});
-
-			});
-</script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#state").change(function() {
-			sendAjaxRequest();
-		});
-	});
-</script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#station").change(function() {
-			google.charts.load('current', {
-				'packages' : [ 'bar' ]
-			});
-			google.charts.setOnLoadCallback(drawChart);
-
-			function drawChart() {
-				
-				var station = $("#station").val();
-				var city = $("#region").val();
-
-
-				
-				$.ajax({
-					type : "GET",
-					contentType : "application/json",
-					url : "getPollutionData?station=" + station,
-					dataType : 'json',				
-					success : function(data) {
-						
-						var chartData = JSON.parse(JSON.stringify(data));
-						
-						var data = google.visualization.arrayToDataTable([
-								[ 'Pollutant Id', 'Pollutant Min', 'Pollutant Max',
-										'Pollutant Avg' ], [chartData[0].pollutionId, chartData[0].pollutionMin, chartData[0].pollutionMax, chartData[0].pollutionAvg ],
-								[ chartData[1].pollutionId, chartData[1].pollutionMin, chartData[1].pollutionMax, chartData[1].pollutionAvg ],
-								[ chartData[2].pollutionId, chartData[2].pollutionMin, chartData[2].pollutionMax, chartData[2].pollutionAvg ],
-								[ chartData[3].pollutionId, chartData[3].pollutionMin, chartData[3].pollutionMax, chartData[3].pollutionAvg ],
-								[ chartData[4].pollutionId, chartData[4].pollutionMin, chartData[4].pollutionMax, chartData[4].pollutionAvg ],
-								[ chartData[5].pollutionId, chartData[5].pollutionMin, chartData[5].pollutionMax, chartData[5].pollutionAvg ],
-								[ chartData[6].pollutionId, chartData[6].pollutionMin, chartData[6].pollutionMax, chartData[6].pollutionAvg ]]);
-
-						var options = {
-							chart : {
-								title : 'City : ' + city,
-								subtitle : 'Region : ' + station + ' | Last Updated : ' + chartData[0].lastUpdated,
-							},
-							bars : 'horizontal' // Required for Material Bar Charts.
-						};
-
-						var chart = new google.charts.Bar(document
-								.getElementById('barchart_material'));
-
-						chart.draw(data, google.charts.Bar.convertOptions(options));
-						
-						
-					}
-					});
-					}
-				});
-			});
-</script>
-
-<script type="text/javascript">
-	function sendAjaxRequest() {
-		var state = $("#state").val();
-		$.get("/getCitiesData?state=" + state, function(data) {
-			$("#region").empty();
-			$("#station").empty();
-			data.forEach(function(item) {
-				var option = "<option th:value = " + item + ">" + item
-						+ "</option>";
-				$("#region").append(option);
-			});
-		});
-	};
-</script>
-
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#region").change(function() {
-			getStationData();
-		});
-	});
-</script>
-
-<script type="text/javascript">
-	function getStationData() {
-		var city = $("#region").val();
-		$.get("/getStationData?city=" + city, function(data) {
-			$("#station").empty();
-			data.forEach(function(item) {
-				var option = "<option th:value = " + item + ">" + item
-						+ "</option>";
-				$("#station").append(option);
-			});
-		});
-	};
-</script>
-
-
-
-
-
+	<script type="text/javascript" th:src="@{/js/home.js}"></script>
 
 <title>Real Time Pollution Data</title>
-
 </head>
 
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Real Time Pollution Data</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav mr-auto">
+        
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+      </ul>
+      
+    </div>
+  </nav>
 <div class="row">
 
 		<div class="col-sm-3"></div>
