@@ -16,6 +16,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
+
+import in.winwithweb.application.model.PollutionData;
 import in.winwithweb.application.model.Record;
 import in.winwithweb.application.model.Sample;
 
@@ -29,6 +32,8 @@ public class AirPollutionDataSchedular {
 	RestTemplate restTemplate;
 
 	static Sample data;
+
+	static Gson gson = new Gson();
 
 	private static List<String> states = new ArrayList<String>();
 
@@ -125,4 +130,45 @@ public class AirPollutionDataSchedular {
 		}
 	}
 
+	public static String getStationPolluutionData(String region) {
+		List<PollutionData> list = new ArrayList<PollutionData>();
+		List<Record> recordList = data.getRecords();
+		int count = 0;
+		for (Record record : recordList) {
+			if (record.getStation().equalsIgnoreCase(region)) {
+				PollutionData pollData = new PollutionData();
+				pollData.setPollutionId(record.getPollutant_id());
+				pollData.setPollutionMin(getIntData(record.getPollutant_min()));
+				pollData.setPollutionMax(getIntData(record.getPollutant_max()));
+				pollData.setPollutionAvg(getIntData(record.getPollutant_avg()));
+				pollData.setLastUpdated(record.getLast_update());
+				list.add(pollData);
+				count++;
+			}
+		}
+
+		for (int i = list.size(); i < 7; i++) {
+			PollutionData pollData = new PollutionData();
+			pollData.setPollutionId("Not Available");
+			pollData.setPollutionMin(0);
+			pollData.setPollutionMax(0);
+			pollData.setPollutionAvg(0);
+			list.add(pollData);
+			count++;
+		}
+
+		return gson.toJson(list);
+	}
+
+	public static int getIntData(String value) {
+		int data = 0;
+
+		try {
+			data = Integer.parseInt(value);
+		} catch (Exception e) {
+
+		}
+
+		return data;
+	}
 }
