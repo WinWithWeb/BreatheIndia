@@ -99,8 +99,10 @@ $(document).ready(function() {
 					var options = {
 						chart : {
 							title : 'City : ' + city,
-							subtitle : 'Region : ' + station + ' | Last Updated : ' + chartData[0].lastUpdated,
+							subtitle : 'Region : ' + station + ' | Last Updated : ' + chartData[0].lastUpdated							
 						},
+						backgroundColor: '#e6faff',
+						is3D: true
 						//bars : 'horizontal' // Required for Material Bar Charts.
 					};
 
