@@ -37,3 +37,11 @@
 	font-weight: 600;
 	text-decoration: none;
 }
+#state,#station,#region{
+ width:150px;   
+}
+
+#state,#station,#region option{
+ width:150px;   
+}
+
