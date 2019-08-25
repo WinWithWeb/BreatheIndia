@@ -51,78 +51,40 @@
       
     </div>
   </nav>
+  <div class="container" style="margin:30px">
 <div class="row">
-
-		<div class="col-sm-3"></div>
-		<div class="col-sm-6">
-
-
-			<h1>Please fill the below Details</h1>
+		<div class="col-sm-4"><h2>Select your desired area</h2><hr/></div>
+		<div class="col-sm-5 ">
+		<form autocomplete="off" th:action="@{/getPollutionData}"
+					th:object="${details}" method="post" class="form-horizontal"
+					role="form">
+		<table class="table">
+      <tr>
+        <th>State</th>
+        <th>City</th>
+        <th>Region</th>
+      </tr>
+    <tbody>
+      <tr>
+        <td><select th:field="*{state}" id="state">
+									<option th:value="None" th:text="Select"></option>
+									<option th:each="state : ${stateList}" th:value="${state}"
+										th:text="${state}"></option>
+							</select></td>
+        <td><select th:field="*{region}" id="region"></select></td>
+        <td><select th:field="*{station}" id="station"></select></td>
+      </tr></tbody>		
+		</table>
+				</form>
 			</div></div>
-		
-
+	
 	<div class="row">
-
-		<div class="col-sm-3"></div>
+		<div class="col-sm-3"><div id="barchart_material" style="width: 500px; height: 400px;"></div></div>
 		<div class="col-sm-6">
-
-
-			<form autocomplete="off" th:action="@{/getPollutionData}"
-				th:object="${details}" method="post" class="form-horizontal"
-				role="form">
-
-				<table>
-
-					<tr>
-
-						<td>
-							<h4>Select State</h4>
-						</td>
-						<td><select th:field="*{state}" id="state">
-								<option th:value="None" th:text="Select"></option>
-								<option th:each="state : ${stateList}" th:value="${state}"
-									th:text="${state}"></option>
-
-						</select></td>
-
-						<td></td>
-
-						<td><h4>Select City</h4></td>
-
-						<td><select th:field="*{region}" id="region">
-
-
-						</select></td>
-
-						<td></td>
-
-						<td><h4>Select Region</h4></td>
-
-						<td><select th:field="*{station}" id="station">
-
-
-						</select></td>
-						
-					
-
-
-					</tr>
-				</table>
-
-			</form>
-
+			
 		</div>
 	</div>
-
-	<div class="row">
-
-		<div class="col-sm-3"></div>
-		<div class="col-sm-6">
-
-			<div id="barchart_material" style="width: 900px; height: 500px;"></div>
-		</div>
-	</div>
-
+</div>
 
 </body>
 </html>
