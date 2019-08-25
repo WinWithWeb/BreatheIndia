@@ -65,10 +65,12 @@ $(document).ready(function() {
 			'packages' : [ 'bar' ]
 		});
 		google.charts.setOnLoadCallback(drawChart);
+		
+		var station = $("#station").val();
+
 
 		function drawChart() {
 			
-			var station = $("#station").val();
 			var city = $("#region").val();
 
 
@@ -82,15 +84,17 @@ $(document).ready(function() {
 					
 					var chartData = JSON.parse(JSON.stringify(data));
 					
-					var data = google.visualization.arrayToDataTable([
-							[ 'Pollutant Id', 'Pollutant Min', 'Pollutant Max',
-									'Pollutant Avg' ], [chartData[0].pollutionId, chartData[0].pollutionMin, chartData[0].pollutionMax, chartData[0].pollutionAvg ],
-							[ chartData[1].pollutionId, chartData[1].pollutionMin, chartData[1].pollutionMax, chartData[1].pollutionAvg ],
-							[ chartData[2].pollutionId, chartData[2].pollutionMin, chartData[2].pollutionMax, chartData[2].pollutionAvg ],
-							[ chartData[3].pollutionId, chartData[3].pollutionMin, chartData[3].pollutionMax, chartData[3].pollutionAvg ],
-							[ chartData[4].pollutionId, chartData[4].pollutionMin, chartData[4].pollutionMax, chartData[4].pollutionAvg ],
-							[ chartData[5].pollutionId, chartData[5].pollutionMin, chartData[5].pollutionMax, chartData[5].pollutionAvg ],
-							[ chartData[6].pollutionId, chartData[6].pollutionMin, chartData[6].pollutionMax, chartData[6].pollutionAvg ]]);
+					var data = new google.visualization.DataTable();
+					
+					data.addColumn('string', 'Pollutant Id');
+					data.addColumn('number', 'Pollutant Min');
+					data.addColumn('number', 'Pollutant Max');
+					data.addColumn('number', 'Pollutant Avg');
+					
+					
+					for (var i = 0; i < chartData.length; i++) {
+					     data.addRow([chartData[i].pollutionId,chartData[i].pollutionMin,chartData[i].pollutionMax,chartData[i].pollutionAvg]);
+					}
 
 					var options = {
 						chart : {
@@ -109,6 +113,35 @@ $(document).ready(function() {
 				}
 				});
 				}
+		
+		 google.charts.load('current', {'packages':['gauge']});
+		    google.charts.setOnLoadCallback(drawGauge);
+		    
+		    var gaugeOptions = {min: 0, max: 500, greenFrom: 0, greenTo: 100, yellowFrom: 100, yellowTo: 250,
+		    	      redFrom: 250, redTo: 500, minorTicks: 5};
+		    
+		    var gauge;
+
+		    function drawGauge() {
+		    	$.ajax({
+					type : "GET",
+					contentType : "application/json",
+					url : "getAQI?station=" + station,
+					dataType : 'json',				
+					success : function(data) {
+					    gaugeData = new google.visualization.DataTable();
+				        gaugeData.addColumn('number', 'AQI');
+				        gaugeData.addRows(1);
+				        gaugeData.setCell(0, 0, data);
+				        
+				        gauge = new google.visualization.Gauge(document.getElementById('aqiChart'));
+				        gauge.draw(gaugeData, gaugeOptions);
+					}
+					});
+		    
+		      }
+		
+		
 			});
 		});
 
