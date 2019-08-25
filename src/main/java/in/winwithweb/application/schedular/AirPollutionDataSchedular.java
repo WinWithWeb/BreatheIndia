@@ -133,34 +133,42 @@ public class AirPollutionDataSchedular {
 	public static String getStationPolluutionData(String region) {
 		List<PollutionData> list = new ArrayList<PollutionData>();
 		List<Record> recordList = data.getRecords();
-		int count = 0;
 		for (Record record : recordList) {
 			if (record.getStation().equalsIgnoreCase(region)) {
 				PollutionData pollData = new PollutionData();
 				pollData.setPollutionId(record.getPollutant_id());
-				pollData.setPollutionMin(getIntData(record.getPollutant_min()));
-				pollData.setPollutionMax(getIntData(record.getPollutant_max()));
-				pollData.setPollutionAvg(getIntData(record.getPollutant_avg()));
-				pollData.setLastUpdated(record.getLast_update());
-				list.add(pollData);
-				count++;
-			}
-		}
+				try {
+					pollData.setPollutionMin(getIntData(record.getPollutant_min()));
+					pollData.setPollutionMax(getIntData(record.getPollutant_max()));
+					pollData.setPollutionAvg(getIntData(record.getPollutant_avg()));
+					pollData.setLastUpdated(record.getLast_update());
 
-		for (int i = list.size(); i < 7; i++) {
-			PollutionData pollData = new PollutionData();
-			pollData.setPollutionId("Not Available");
-			pollData.setPollutionMin(0);
-			pollData.setPollutionMax(0);
-			pollData.setPollutionAvg(0);
-			list.add(pollData);
-			count++;
+				} catch (Exception e) {
+					continue;
+				}
+				list.add(pollData);
+			}
 		}
 
 		return gson.toJson(list);
 	}
 
-	public static int getIntData(String value) {
+	public static String getAQI(String region) {
+		List<Record> recordList = data.getRecords();
+		int AQI = 0;
+		for (Record record : recordList) {
+			if (record.getStation().equalsIgnoreCase(region)) {
+				if (getIntDataWithDefualt(record.getPollutant_avg()) > AQI) {
+					AQI = getIntDataWithDefualt(record.getPollutant_avg());
+
+				}
+
+			}
+		}
+		return gson.toJson(AQI);
+	}
+
+	public static int getIntDataWithDefualt(String value) {
 		int data = 0;
 
 		try {
@@ -168,6 +176,14 @@ public class AirPollutionDataSchedular {
 		} catch (Exception e) {
 
 		}
+
+		return data;
+	}
+
+	public static int getIntData(String value) throws Exception {
+		int data = 0;
+
+		data = Integer.parseInt(value);
 
 		return data;
 	}
