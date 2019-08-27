@@ -101,7 +101,7 @@ $(document).ready(function() {
 							title : 'City : ' + city,
 							subtitle : 'Region : ' + station + ' | Last Updated : ' + chartData[0].lastUpdated							
 						},
-						backgroundColor: '#e6faff',
+						backgroundColor: '#ffffff',
 						is3D: true
 						//bars : 'horizontal' // Required for Material Bar Charts.
 					};

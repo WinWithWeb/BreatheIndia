@@ -45,10 +45,14 @@
  width:150px;   
 }
 
-body{
-	 background-image: linear-gradient(to right, #e6faff 0%, #ccf5ff 51%, #e6faff 100%);
+body{ 
+	 background-color: #FFFFFF;
 }
 
 #dropdownarea{
-	background-color: #e6ffe6;
+	background-color: #def2f166;
+}
+
+.navbar{
+	background-color: #3aafa9!important;
 }
