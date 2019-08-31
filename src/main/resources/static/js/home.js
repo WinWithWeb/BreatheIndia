@@ -142,6 +142,60 @@ $(document).ready(function() {
 					});
 		    
 		      }
+		    
+		    
+		    
+		    google.charts.load('current', {packages: ['corechart', 'line']});
+		    google.charts.setOnLoadCallback(drawTrend);
+		    
+		    function drawTrend() {
+		    	$.ajax({
+					type : "GET",
+					contentType : "application/json",
+					url : "getTrendData?station=" + station,
+					dataType : 'json',				
+					success : function(data) {
+						
+						var chartData = JSON.parse(JSON.stringify(data));
+
+						
+					      var data = new google.visualization.DataTable();
+					      data.addColumn('number', 'X');
+					      
+					      for (var i = 0; i < chartData.length; i++) {
+							     data.addColumn('number', chartData[i].pollutionId);
+					      }
+					      
+
+					      for (var i = 0; i < chartData.length; i++) {  
+						      var chartTrendData = [];
+					    	  chartTrendData.push[i];
+					    	  
+					    	  for (var j = 0; j < chartData.length; i++) {  
+					    		  chartTrendData.push(chartData[j].pollutionAvg[i]);	
+					    	  }
+					    	  
+					    	  alert(chartTrendData);
+					    	  data.addRow(chartTrendData);
+					      }
+					      var options = {
+					    	        chart: {
+					    	          title: 'Box Office Earnings in First Two Weeks of Opening',
+					    	          subtitle: 'in millions of dollars (USD)'
+					    	        },
+					    	        width: 900,
+					    	        height: 500
+					    	      };
+					      
+					      var chart = new google.visualization.LineChart(document.getElementById('trendChart'));
+					      chart.draw(data, options);
+					    
+					}
+					});
+		    
+		      }
+		    
+		    
 		
 		
 			});
