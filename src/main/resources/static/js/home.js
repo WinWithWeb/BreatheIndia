@@ -160,6 +160,7 @@ $(document).ready(function() {
 
 						
 					      var data = new google.visualization.DataTable();
+					      
 					      data.addColumn('number', 'X');
 					      
 					      for (var i = 0; i < chartData.length; i++) {
@@ -167,15 +168,15 @@ $(document).ready(function() {
 					      }
 					      
 
-					      for (var i = 0; i < chartData.length; i++) {  
+					      for (var i = 0; i < 5; i++) {  
 						      var chartTrendData = [];
-					    	  chartTrendData.push[i];
 					    	  
-					    	  for (var j = 0; j < chartData.length; i++) {  
-					    		  chartTrendData.push(chartData[j].pollutionAvg[i]);	
+						      chartTrendData.push(i);
+						      
+					    	  for (var j = 0; j < chartData.length; j++) {
+					    		  chartTrendData.push(chartData[j].pollutionAvg[i]);
 					    	  }
-					    	  
-					    	  alert(chartTrendData);
+					    	  					    	  
 					    	  data.addRow(chartTrendData);
 					      }
 					      var options = {
@@ -184,6 +185,7 @@ $(document).ready(function() {
 					    	          subtitle: 'in millions of dollars (USD)'
 					    	        },
 					    	        width: 900,
+					    	        
 					    	        height: 500
 					    	      };
 					      

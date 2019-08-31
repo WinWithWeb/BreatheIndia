@@ -96,9 +96,9 @@ public class AirPollutionDataSchedular {
 					PollutionData pollData = new PollutionData();
 					pollData.setPollutionId(record.getPollutant_id());
 					try {
-						pollData.setPollutionMin(getIntDataWithDefualt(record.getPollutant_min()));
-						pollData.setPollutionMax(getIntDataWithDefualt(record.getPollutant_max()));
-						pollData.setPollutionAvg(getIntDataWithDefualt(record.getPollutant_avg()));
+						pollData.setPollutionMin(getIntData(record.getPollutant_min()));
+						pollData.setPollutionMax(getIntData(record.getPollutant_max()));
+						pollData.setPollutionAvg(getIntData(record.getPollutant_avg()));
 						pollData.setLastUpdated(record.getLast_update());
 
 					} catch (Exception e) {
@@ -138,18 +138,17 @@ public class AirPollutionDataSchedular {
 
 		}
 
-		System.out.println(gson.toJson(pollutionTrendList));
 		return gson.toJson(pollutionTrendList);
 	}
 
-	@Scheduled(cron = "0/8 * * * * ?")
+	@Scheduled(cron = "0 0 0/1 * * ?")
 	public void deleteData() {
 		if (dataList.size() > 5) {
 			dataList.remove(0);
 		}
 	}
 
-	@Scheduled(cron = "0/10 * * * * ?")
+	@Scheduled(cron = "0 0 0/1 * * ?")
 	public void cronJobSch() {
 		String url = "https://api.data.gov.in/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd00000173db32215e6b4ad04b1c0d2d7138b31d&format=json&offset=0&limit=5000";
 		data = getRestTemplate().getForObject(url, Sample.class);

@@ -67,7 +67,6 @@ public class HomeController {
 	
 	@RequestMapping(value = "/getTrendData", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String getTrendData(@RequestParam String station) {
-		System.out.println("test");
 		return AirPollutionDataSchedular.getPollutionTrendData(station);
 	}
 
