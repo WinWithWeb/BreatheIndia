@@ -16,6 +16,7 @@ public class PollutionTrendData {
 	private List<Integer> pollutionMin = new ArrayList<Integer>();
 	private List<Integer> pollutionMax = new ArrayList<Integer>();
 	private List<Integer> pollutionAvg = new ArrayList<Integer>();
+	private List<String> time = new ArrayList<String>();
 	/**
 	 * @return the pollutionId
 	 */
@@ -63,6 +64,18 @@ public class PollutionTrendData {
 	 */
 	public void setPollutionAvg(List<Integer> pollutionAvg) {
 		this.pollutionAvg = pollutionAvg;
+	}
+	/**
+	 * @return the time
+	 */
+	public List<String> getTime() {
+		return time;
+	}
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(List<String> time) {
+		this.time = time;
 	}
 
 	

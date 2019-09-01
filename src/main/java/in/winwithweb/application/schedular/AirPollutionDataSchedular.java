@@ -3,8 +3,10 @@
  */
 package in.winwithweb.application.schedular;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +122,7 @@ public class AirPollutionDataSchedular {
 						PollutionTrendData.getPollutionMin().add(pollutionData.getPollutionMin());
 						PollutionTrendData.getPollutionMax().add(pollutionData.getPollutionMax());
 						PollutionTrendData.getPollutionAvg().add(pollutionData.getPollutionAvg());
+						PollutionTrendData.getTime().add(getTime(pollutionData.getLastUpdated()));
 						isFound = true;
 					}
 				}
@@ -130,6 +133,7 @@ public class AirPollutionDataSchedular {
 					pollutionTrendData.getPollutionMin().add(pollutionData.getPollutionMin());
 					pollutionTrendData.getPollutionMax().add(pollutionData.getPollutionMax());
 					pollutionTrendData.getPollutionAvg().add(pollutionData.getPollutionAvg());
+					pollutionTrendData.getTime().add(getTime(pollutionData.getLastUpdated()));
 					pollutionTrendList.add(pollutionTrendData);
 
 				}
@@ -139,6 +143,21 @@ public class AirPollutionDataSchedular {
 		}
 
 		return gson.toJson(pollutionTrendList);
+	}
+
+	private static String getTime(String date) {
+		String originalString = date;
+
+		try {
+			Date newdate = new SimpleDateFormat("dd-MM-dyyy HH:mm:ss").parse(originalString);
+			originalString = new SimpleDateFormat("HH:mm").format(newdate);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return originalString;
 	}
 
 	@Scheduled(cron = "0 0 0/1 * * ?")

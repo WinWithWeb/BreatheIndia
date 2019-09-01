@@ -161,7 +161,7 @@ $(document).ready(function() {
 						
 					      var data = new google.visualization.DataTable();
 					      
-					      data.addColumn('number', 'X');
+					      data.addColumn('string', 'X');
 					      
 					      for (var i = 0; i < chartData.length; i++) {
 							     data.addColumn('number', chartData[i].pollutionId);
@@ -171,22 +171,19 @@ $(document).ready(function() {
 					      for (var i = 0; i < 5; i++) {  
 						      var chartTrendData = [];
 					    	  
-						      chartTrendData.push(i);
 						      
 					    	  for (var j = 0; j < chartData.length; j++) {
+					    		  if(j==0){
+								      chartTrendData.push(chartData[j].time[i]);
+
+					    		  }
 					    		  chartTrendData.push(chartData[j].pollutionAvg[i]);
 					    	  }
 					    	  					    	  
 					    	  data.addRow(chartTrendData);
 					      }
 					      var options = {
-					    	        chart: {
-					    	          title: 'Box Office Earnings in First Two Weeks of Opening',
-					    	          subtitle: 'in millions of dollars (USD)'
-					    	        },
-					    	        width: 900,
-					    	        
-					    	        height: 500
+					    	        pointSize: 3
 					    	      };
 					      
 					      var chart = new google.visualization.LineChart(document.getElementById('trendChart'));
