@@ -3,8 +3,10 @@
  */
 package in.winwithweb.application.schedular;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 
 import in.winwithweb.application.model.PollutionData;
+import in.winwithweb.application.model.PollutionTrendData;
 import in.winwithweb.application.model.Record;
 import in.winwithweb.application.model.Sample;
 
@@ -40,6 +43,8 @@ public class AirPollutionDataSchedular {
 	private static Map<String, List<String>> region = new HashMap<String, List<String>>();
 
 	private static Map<String, List<String>> stationMap = new HashMap<String, List<String>>();
+
+	static List<Sample> dataList = new ArrayList<Sample>();
 
 	private RestTemplate getRestTemplate() {
 		if (restTemplate == null) {
@@ -83,11 +88,88 @@ public class AirPollutionDataSchedular {
 
 	}
 
-	@Scheduled(cron = "0/10 * * * * ?")
+	public static String getPollutionTrendData(String stationData) {
+		List<PollutionData> list = new ArrayList<PollutionData>();
+
+		for (Sample data : dataList) {
+			List<Record> recordList = data.getRecords();
+			for (Record record : recordList) {
+				if (record.getStation().equalsIgnoreCase(stationData)) {
+					PollutionData pollData = new PollutionData();
+					pollData.setPollutionId(record.getPollutant_id());
+					try {
+						pollData.setPollutionMin(getIntData(record.getPollutant_min()));
+						pollData.setPollutionMax(getIntData(record.getPollutant_max()));
+						pollData.setPollutionAvg(getIntData(record.getPollutant_avg()));
+						pollData.setLastUpdated(record.getLast_update());
+
+					} catch (Exception e) {
+						continue;
+					}
+					list.add(pollData);
+				}
+			}
+
+		}
+
+		List<PollutionTrendData> pollutionTrendList = new ArrayList<PollutionTrendData>();
+
+		if (!list.isEmpty()) {
+			for (PollutionData pollutionData : list) {
+				boolean isFound = false;
+				for (PollutionTrendData PollutionTrendData : pollutionTrendList) {
+					if (PollutionTrendData.getPollutionId().equalsIgnoreCase(pollutionData.getPollutionId())) {
+						PollutionTrendData.getPollutionMin().add(pollutionData.getPollutionMin());
+						PollutionTrendData.getPollutionMax().add(pollutionData.getPollutionMax());
+						PollutionTrendData.getPollutionAvg().add(pollutionData.getPollutionAvg());
+						PollutionTrendData.getTime().add(getTime(pollutionData.getLastUpdated()));
+						isFound = true;
+					}
+				}
+
+				if (!isFound) {
+					PollutionTrendData pollutionTrendData = new PollutionTrendData();
+					pollutionTrendData.setPollutionId(pollutionData.getPollutionId());
+					pollutionTrendData.getPollutionMin().add(pollutionData.getPollutionMin());
+					pollutionTrendData.getPollutionMax().add(pollutionData.getPollutionMax());
+					pollutionTrendData.getPollutionAvg().add(pollutionData.getPollutionAvg());
+					pollutionTrendData.getTime().add(getTime(pollutionData.getLastUpdated()));
+					pollutionTrendList.add(pollutionTrendData);
+
+				}
+
+			}
+
+		}
+
+		return gson.toJson(pollutionTrendList);
+	}
+
+	private static String getTime(String date) {
+		String originalString = date;
+
+		try {
+			Date newdate = new SimpleDateFormat("dd-MM-dyyy HH:mm:ss").parse(originalString);
+			originalString = new SimpleDateFormat("HH:mm").format(newdate);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return originalString;
+	}
+
+	@Scheduled(cron = "0 0 0/1 * * ?")
 	public void cronJobSch() {
 		String url = "https://api.data.gov.in/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd00000173db32215e6b4ad04b1c0d2d7138b31d&format=json&offset=0&limit=5000";
 		data = getRestTemplate().getForObject(url, Sample.class);
 		if (data != null) {
+
+			if (dataList.size() > 5) {
+				dataList.remove(0);
+			}
+			dataList.add(data);
 			List<Record> recordList = data.getRecords();
 			states = new ArrayList<String>();
 			region = new HashMap<String, List<String>>();

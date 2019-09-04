@@ -16,9 +16,9 @@
 
 <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>
-	
-	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-	
+
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
 
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/css/custom.css}" />
@@ -26,75 +26,96 @@
 
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-	<script type="text/javascript" th:src="@{/js/home.js}"></script>
+<script type="text/javascript" th:src="@{/js/home.js}"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Real Time Pollution Data</title>
 </head>
 
 <body>
-<nav class="navbar navbar-dark navbar-expand-md bg-success justify-content-between">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-nav">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse dual-nav w-100">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link pl-0" href="#">Home <span class="sr-only">Home</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About Us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Partners</a>
-            </li>
-        </ul>
-    </div>
-    <a href="/" class="navbar-brand mx-auto d-block text-center w-100">Real Time Pollution Data</a>
-    <div class="navbar-collapse collapse dual-nav w-100">
-        <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href=""><i class="fa fa-twitter"></i></a></li>
-            <li class="nav-item"><a class="nav-link" href=""><i class="fa fa-github"></i></a></li>
-        </ul>
-    </div>
-</nav>
-  <div class="container" >
-<div id="dropdownarea" class="row shadow p-3 mb-2 rounded" style="overflow-x:auto;">
-		<div class="col-sm-5 "><h2>Select your desired area</h2><hr/></div>
-		<div class="col-sm-4 ">
-		<form autocomplete="off" th:action="@{/getPollutionData}"
+	<nav
+		class="navbar navbar-dark navbar-expand-md bg-success justify-content-between">
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target=".dual-nav">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="navbar-collapse collapse dual-nav w-100">
+			<ul class="navbar-nav">
+				<li class="nav-item active"><a class="nav-link pl-0" href="#">Home
+						<span class="sr-only">Home</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">About Us</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="#">Partners</a>
+				</li>
+			</ul>
+		</div>
+		<a href="/" class="navbar-brand mx-auto d-block text-center w-100">Real
+			Time Pollution Data</a>
+		<div class="navbar-collapse collapse dual-nav w-100">
+			<ul class="nav navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" href=""><i
+						class="fa fa-twitter"></i></a></li>
+				<li class="nav-item"><a class="nav-link" href=""><i
+						class="fa fa-github"></i></a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<div id="dropdownarea" class="row shadow p-3 mb-2 rounded"
+			style="overflow-x: auto;">
+			<div class="col-sm-5 ">
+				<h2>Select your desired area</h2>
+				<hr />
+			</div>
+			<div class="col-sm-4 ">
+				<form autocomplete="off" th:action="@{/getPollutionData}"
 					th:object="${details}" method="post" class="form-horizontal"
 					role="form">
-		<table class="table">
-      <tr>
-        <th>State</th>
-        <th></th>
-        <th>City</th>
-        <th></th>
-        <th>Region</th>
-      </tr>
-    <tbody>
-      <tr>
-        <td><select th:field="*{state}" id="state">
-									<option th:value="None" th:text="Select"></option>
-									<option th:each="state : ${stateList}" th:value="${state}"
-										th:text="${state}"></option>
-							</select></td>
-							<td></td>
-        <td><select th:field="*{region}" id="region"></select></td>
-        <td></td>
-        <td><select th:field="*{station}" id="station"></select></td>
-      </tr></tbody>		
-		</table>
+					<table class="table">
+						<tr>
+							<th>State</th>
+							<th></th>
+							<th>City</th>
+							<th></th>
+							<th>Region</th>
+						</tr>
+						<tbody>
+							<tr>
+								<td><select th:field="*{state}" id="state">
+										<option th:value="None" th:text="Select"></option>
+										<option th:each="state : ${stateList}" th:value="${state}"
+											th:text="${state}"></option>
+								</select></td>
+								<td></td>
+								<td><select th:field="*{region}" id="region"></select></td>
+								<td></td>
+								<td><select th:field="*{station}" id="station"></select></td>
+							</tr>
+						</tbody>
+					</table>
 				</form>
-			</div></div>
-	
-	<div class="row">
-		<div class="col-sm-5"><div id="aqiChart" style="width: 350px; height: 300px;"></div></div>
-		<div class="col-sm-5">
-			<div id="barchart_material" style="width: 650px; height: 400px;"></div>
+			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-sm-5">
+				<div id="aqiChart" style="width: 350px; height: 300px;"></div>
+			</div>
+			<div class="col-sm-5">
+				<div id="barchart_material" style="width: 650px; height: 400px;"></div>
+			</div>
+		</div>
+
+
+		<div class="row">
+
+			<div class="col-sm-10">
+				<div id="trendChart" style="width: 850px; height: 600px;"></div>
+			</div>
+
+		</div>
+
 	</div>
-</div>
 
 </body>
 </html>
