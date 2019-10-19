@@ -6,10 +6,14 @@ package in.winwithweb.application.schedular;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -43,6 +47,11 @@ public class AirPollutionDataSchedular {
 	private static Map<String, List<String>> region = new HashMap<String, List<String>>();
 
 	private static Map<String, List<String>> stationMap = new HashMap<String, List<String>>();
+
+	private static Map<String, Integer> aqiData = new HashMap<String, Integer>();
+
+	private static List<String> lowestAQI = new ArrayList<String>();
+	private static List<String> highestAQI = new ArrayList<String>();
 
 	static List<Sample> dataList = new ArrayList<Sample>();
 
@@ -174,6 +183,7 @@ public class AirPollutionDataSchedular {
 			states = new ArrayList<String>();
 			region = new HashMap<String, List<String>>();
 			stationMap = new HashMap<String, List<String>>();
+
 			for (Record record : recordList) {
 				if (!states.contains(record.getState())) {
 					states.add(record.getState());
@@ -208,8 +218,93 @@ public class AirPollutionDataSchedular {
 					stationMap.put(record.getCity(), stationList);
 				}
 
+				if (aqiData.containsKey(record.getStation())) {
+					int AQI = aqiData.get(record.getStation());
+					if (AQI < getIntDataWithDefualt(record.getPollutant_avg())) {
+						AQI = getIntDataWithDefualt(record.getPollutant_avg());
+						aqiData.put(record.getStation(), AQI);
+					}
+
+				} else {
+					aqiData.put(record.getStation(), getIntDataWithDefualt(record.getPollutant_avg()));
+				}
+
 			}
+
+			aqiData = sortByValue(aqiData);
+
+			System.out.println("INDIA GREENER CITY");
+
+			int i = 0;
+			for (Entry<String, Integer> entry : aqiData.entrySet()) {
+				if (i == 10) {
+					break;
+				} else {
+					if (entry.getValue() != 0) {
+						lowestAQI.add(entry.getKey());
+
+						i++;
+					}
+				}
+			}
+
+			aqiData = sortByValue1(aqiData);
+
+			System.out.println("INDIA MOST POLLUTED CITY");
+
+			int j = 0;
+			for (Entry<String, Integer> entry : aqiData.entrySet()) {
+				if (j == 10) {
+					break;
+				} else {
+					if (entry.getValue() != 0) {
+						highestAQI.add(entry.getKey());
+						j++;
+					}
+				}
+			}
+
 		}
+	}
+
+	private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap) {
+
+		List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+
+		Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+				return (o1.getValue()).compareTo(o2.getValue());
+			}
+		});
+
+		// 3. Loop the sorted list and put it into a new insertion order Map
+		// LinkedHashMap
+		Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+		for (Map.Entry<String, Integer> entry : list) {
+			sortedMap.put(entry.getKey(), entry.getValue());
+		}
+
+		return sortedMap;
+	}
+
+	private static Map<String, Integer> sortByValue1(Map<String, Integer> unsortMap) {
+
+		List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+
+		Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+			public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+				return (o2.getValue()).compareTo(o1.getValue());
+			}
+		});
+
+		// 3. Loop the sorted list and put it into a new insertion order Map
+		// LinkedHashMap
+		Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+		for (Map.Entry<String, Integer> entry : list) {
+			sortedMap.put(entry.getKey(), entry.getValue());
+		}
+
+		return sortedMap;
 	}
 
 	public static String getStationPolluutionData(String region) {
@@ -236,18 +331,7 @@ public class AirPollutionDataSchedular {
 	}
 
 	public static String getAQI(String region) {
-		List<Record> recordList = data.getRecords();
-		int AQI = 0;
-		for (Record record : recordList) {
-			if (record.getStation().equalsIgnoreCase(region)) {
-				if (getIntDataWithDefualt(record.getPollutant_avg()) > AQI) {
-					AQI = getIntDataWithDefualt(record.getPollutant_avg());
-
-				}
-
-			}
-		}
-		return gson.toJson(AQI);
+		return gson.toJson(aqiData.get(region));
 	}
 
 	public static int getIntDataWithDefualt(String value) {
