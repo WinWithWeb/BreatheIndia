@@ -3,6 +3,8 @@
 ($(document).ready(function() {
 	$("#state").change(function() {
 		sendAjaxRequest();
+		$("#region").show();
+		$("#station").show();
 	});
 }));
 
@@ -236,3 +238,8 @@ function getStationData() {
 		});
 	});
 };
+
+function onLoadhidedropdowns() {
+			$("#region").hide();
+			$("#station").hide();
+			};

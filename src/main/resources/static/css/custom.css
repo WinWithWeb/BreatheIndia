@@ -37,22 +37,79 @@
 	font-weight: 600;
 	text-decoration: none;
 }
-#state,#station,#region{
- width:150px;   
+
+#state, #station, #region {
+	width: 150px;
 }
 
-#state,#station,#region option{
- width:150px;   
+#state, #station, #region option {
+	width: 150px;
 }
 
-body{ 
-	 background-color: #FFFFFF;
+body {
+	background-color: #FFFFFF;
 }
 
-#dropdownarea{
+#dropdownarea {
 	background-color: #def2f166;
 }
 
-.navbar{
-	background-color: #3aafa9!important;
+.navbar {
+	background-color: #3aafa9 !important;
+}
+
+.navbar-dark .navbar-brand {
+	font-weight: 700;
+    font-size: 40px;
+}
+
+
+.div-table {
+  display: table;         
+  width: auto;         
+  background-color: #eee;         
+  border: 1px solid #666666;         
+  border-spacing: 5px; /* cellspacing:poor IE support for  this */
+}
+.div-table-row {
+  display: table-row;
+  width: auto;
+  clear: both;
+}
+.div-table-col {
+  float: left; /* fix for  buggy browsers */
+  display: table-column;         
+  width: 200px;         
+  background-color: #ccc;  
+}
+
+@media screen and (max-width: 900px) and (min-width: 300px){
+	table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 200px;
+    margin-left: 150px;
+  }
+  .navbar-dark .navbar-brand {
+	font-weight: 700;
+    font-size: 25px;
+}
+
+#region,#station{
+	margin-left: 27%;
+    margin-top: 5%;
+}
+
+#state{
+    margin-top: 5%;
+}
 }
