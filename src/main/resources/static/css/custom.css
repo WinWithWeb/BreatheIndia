@@ -47,7 +47,7 @@
 }
 
 body {
-	background-color: #FFFFFF;
+	background-color: #FFFAFA;
 }
 
 #dropdownarea {
@@ -55,7 +55,7 @@ body {
 }
 
 .navbar {
-	background-color: #3aafa9 !important;
+	   background: linear-gradient(to right, #00cc66 0%, #66ccff 100%);
 }
 
 .navbar-dark .navbar-brand {
@@ -83,22 +83,11 @@ body {
   background-color: #ccc;  
 }
 
+/* #2ndrow{
+	    margin-left: -10%;
+} */
+
 @media screen and (max-width: 900px) and (min-width: 300px){
-	table, thead, tbody, th, td, tr {
-    display: block;
-  }
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-  td {
-    border: none;
-    border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 200px;
-    margin-left: 150px;
-  }
   .navbar-dark .navbar-brand {
 	font-weight: 700;
     font-size: 25px;
