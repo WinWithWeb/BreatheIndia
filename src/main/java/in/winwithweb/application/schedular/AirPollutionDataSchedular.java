@@ -175,14 +175,16 @@ public class AirPollutionDataSchedular {
 		data = getRestTemplate().getForObject(url, Sample.class);
 		if (data != null) {
 
+			states.clear();
+			region.clear();
+			stationMap.clear();
+			aqiData.clear();
+
 			if (dataList.size() > 5) {
 				dataList.remove(0);
 			}
 			dataList.add(data);
 			List<Record> recordList = data.getRecords();
-			states = new ArrayList<String>();
-			region = new HashMap<String, List<String>>();
-			stationMap = new HashMap<String, List<String>>();
 
 			for (Record record : recordList) {
 				if (!states.contains(record.getState())) {
@@ -233,8 +235,6 @@ public class AirPollutionDataSchedular {
 
 			aqiData = sortByValue(aqiData);
 
-			System.out.println("INDIA GREENER CITY");
-
 			int i = 0;
 			for (Entry<String, Integer> entry : aqiData.entrySet()) {
 				if (i == 10) {
@@ -249,8 +249,6 @@ public class AirPollutionDataSchedular {
 			}
 
 			aqiData = sortByValue1(aqiData);
-
-			System.out.println("INDIA MOST POLLUTED CITY");
 
 			int j = 0;
 			for (Entry<String, Integer> entry : aqiData.entrySet()) {
