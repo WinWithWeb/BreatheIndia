@@ -209,7 +209,7 @@ public class AirPollutionDataSchedular {
 				if (stationMap.containsKey(record.getCity())) {
 					List<String> station = stationMap.get(record.getCity());
 					if (!station.contains(record.getStation())) {
-
+						
 						station.add(record.getStation());
 					}
 				} else {
@@ -220,15 +220,15 @@ public class AirPollutionDataSchedular {
 					stationMap.put(record.getCity(), stationList);
 				}
 
-				if (aqiData.containsKey(record.getStation())) {
-					int AQI = aqiData.get(record.getStation());
+				if (aqiData.containsKey(record.getStation().toUpperCase())) {
+					int AQI = aqiData.get(record.getStation().toUpperCase());
 					if (AQI < getIntDataWithDefualt(record.getPollutant_avg())) {
 						AQI = getIntDataWithDefualt(record.getPollutant_avg());
-						aqiData.put(record.getStation(), AQI);
+						aqiData.put(record.getStation().toUpperCase(), AQI);
 					}
 
 				} else {
-					aqiData.put(record.getStation(), getIntDataWithDefualt(record.getPollutant_avg()));
+					aqiData.put(record.getStation().toUpperCase(), getIntDataWithDefualt(record.getPollutant_avg()));
 				}
 
 			}
@@ -329,7 +329,7 @@ public class AirPollutionDataSchedular {
 	}
 
 	public static String getAQI(String region) {
-		return gson.toJson(aqiData.get(region));
+		return gson.toJson(aqiData.get(region.toUpperCase()));
 	}
 
 	public static int getIntDataWithDefualt(String value) {
