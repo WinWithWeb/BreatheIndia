@@ -12,6 +12,7 @@ public class Details {
 	String state;
 	String region;
 	String station;
+	String stationName;
 
 	/**
 	 * @return the state
@@ -53,6 +54,20 @@ public class Details {
 	 */
 	public void setStation(String station) {
 		this.station = station;
+	}
+
+	/**
+	 * @return the stationName
+	 */
+	public String getStationName() {
+		return stationName;
+	}
+
+	/**
+	 * @param stationName the stationName to set
+	 */
+	public void setStationName(String stationName) {
+		this.stationName = stationName;
 	}
 
 	@Override

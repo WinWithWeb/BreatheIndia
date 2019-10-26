@@ -93,7 +93,7 @@ public class Record {
 	 * @return the station
 	 */
 	public String getStation() {
-		return station;
+		return station.substring(0, station.indexOf(','));
 	}
 	/**
 	 * @param station the station to set

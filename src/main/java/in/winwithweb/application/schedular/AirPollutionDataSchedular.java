@@ -175,14 +175,16 @@ public class AirPollutionDataSchedular {
 		data = getRestTemplate().getForObject(url, Sample.class);
 		if (data != null) {
 
+			states.clear();
+			region.clear();
+			stationMap.clear();
+			aqiData.clear();
+
 			if (dataList.size() > 5) {
 				dataList.remove(0);
 			}
 			dataList.add(data);
 			List<Record> recordList = data.getRecords();
-			states = new ArrayList<String>();
-			region = new HashMap<String, List<String>>();
-			stationMap = new HashMap<String, List<String>>();
 
 			for (Record record : recordList) {
 				if (!states.contains(record.getState())) {
@@ -207,7 +209,7 @@ public class AirPollutionDataSchedular {
 				if (stationMap.containsKey(record.getCity())) {
 					List<String> station = stationMap.get(record.getCity());
 					if (!station.contains(record.getStation())) {
-
+						
 						station.add(record.getStation());
 					}
 				} else {
@@ -218,22 +220,20 @@ public class AirPollutionDataSchedular {
 					stationMap.put(record.getCity(), stationList);
 				}
 
-				if (aqiData.containsKey(record.getStation())) {
-					int AQI = aqiData.get(record.getStation());
+				if (aqiData.containsKey(record.getStation().toUpperCase())) {
+					int AQI = aqiData.get(record.getStation().toUpperCase());
 					if (AQI < getIntDataWithDefualt(record.getPollutant_avg())) {
 						AQI = getIntDataWithDefualt(record.getPollutant_avg());
-						aqiData.put(record.getStation(), AQI);
+						aqiData.put(record.getStation().toUpperCase(), AQI);
 					}
 
 				} else {
-					aqiData.put(record.getStation(), getIntDataWithDefualt(record.getPollutant_avg()));
+					aqiData.put(record.getStation().toUpperCase(), getIntDataWithDefualt(record.getPollutant_avg()));
 				}
 
 			}
 
 			aqiData = sortByValue(aqiData);
-
-			System.out.println("INDIA GREENER CITY");
 
 			int i = 0;
 			for (Entry<String, Integer> entry : aqiData.entrySet()) {
@@ -249,8 +249,6 @@ public class AirPollutionDataSchedular {
 			}
 
 			aqiData = sortByValue1(aqiData);
-
-			System.out.println("INDIA MOST POLLUTED CITY");
 
 			int j = 0;
 			for (Entry<String, Integer> entry : aqiData.entrySet()) {
@@ -331,7 +329,7 @@ public class AirPollutionDataSchedular {
 	}
 
 	public static String getAQI(String region) {
-		return gson.toJson(aqiData.get(region));
+		return gson.toJson(aqiData.get(region.toUpperCase()));
 	}
 
 	public static int getIntDataWithDefualt(String value) {
