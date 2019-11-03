@@ -3,6 +3,7 @@
  */
 package in.winwithweb.application.schedular;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -180,10 +181,22 @@ public class AirPollutionDataSchedular {
 			stationMap.clear();
 			aqiData.clear();
 
-			if (dataList.size() > 5) {
-				dataList.remove(0);
+			Date date = new Date();
+
+			DateFormat df = new SimpleDateFormat("hh");
+			int hour = Integer.parseInt(df.format(date));
+
+			if (dataList.size() == 0) {
+				dataList.add(data);
+			} else {
+				if (hour % 6 == 0) {
+					if (dataList.size() >= 5) {
+						dataList.remove(0);
+					}
+					dataList.add(data);
+				}
 			}
-			dataList.add(data);
+
 			List<Record> recordList = data.getRecords();
 
 			for (Record record : recordList) {
@@ -209,7 +222,7 @@ public class AirPollutionDataSchedular {
 				if (stationMap.containsKey(record.getCity())) {
 					List<String> station = stationMap.get(record.getCity());
 					if (!station.contains(record.getStation())) {
-						
+
 						station.add(record.getStation());
 					}
 				} else {

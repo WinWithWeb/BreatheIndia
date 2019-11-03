@@ -104,8 +104,8 @@ $(document).ready(function() {
 							subtitle : 'Region : ' + station + ' | Last Updated : ' + chartData[0].lastUpdated							
 						},
 						backgroundColor: '#ffffff',
-						is3D: true
-						//bars : 'horizontal' // Required for Material Bar Charts.
+						is3D: true,
+						bars : 'horizontal' // Required for Material Bar Charts.
 					};
 
 					var chart = new google.charts.Bar(document
