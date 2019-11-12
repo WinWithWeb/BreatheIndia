@@ -172,8 +172,12 @@ public class AirPollutionDataSchedular {
 
 	@Scheduled(cron = "0 0 0/1 * * ?")
 	public void cronJobSch() {
-		String url = "https://api.data.gov.in/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd00000173db32215e6b4ad04b1c0d2d7138b31d&format=json&offset=0&limit=5000";
-		data = getRestTemplate().getForObject(url, Sample.class);
+		try {
+		String url = "https://api.data.gov.in/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd00000173db32215e6b4ad04b1c0d2d7138b31d&format=json&offset=0&limit=999";
+		
+		Sample tempdata = getRestTemplate().getForObject(url, Sample.class);
+		data = tempdata;
+		
 		if (data != null) {
 
 			states.clear();
@@ -275,6 +279,8 @@ public class AirPollutionDataSchedular {
 				}
 			}
 
+		}
+		}catch(Exception e) {
 		}
 	}
 
