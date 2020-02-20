@@ -51,7 +51,12 @@ public class HomeController {
 				}
 
 			}
+		}else {
+			model.addAttribute("details", new Details());
+			model.addAttribute("stateList", new ArrayList<String>());
+
 		}
+		
 		return "home";
 	}
 

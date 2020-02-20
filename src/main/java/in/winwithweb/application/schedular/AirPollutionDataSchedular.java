@@ -3,6 +3,7 @@
  */
 package in.winwithweb.application.schedular;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -171,8 +172,12 @@ public class AirPollutionDataSchedular {
 
 	@Scheduled(cron = "0 0 0/1 * * ?")
 	public void cronJobSch() {
-		String url = "https://api.data.gov.in/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd00000173db32215e6b4ad04b1c0d2d7138b31d&format=json&offset=0&limit=5000";
-		data = getRestTemplate().getForObject(url, Sample.class);
+		try {
+		String url = "https://api.data.gov.in/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd00000173db32215e6b4ad04b1c0d2d7138b31d&format=json&offset=0&limit=999";
+		
+		Sample tempdata = getRestTemplate().getForObject(url, Sample.class);
+		data = tempdata;
+		
 		if (data != null) {
 
 			states.clear();
@@ -180,10 +185,22 @@ public class AirPollutionDataSchedular {
 			stationMap.clear();
 			aqiData.clear();
 
-			if (dataList.size() > 5) {
-				dataList.remove(0);
+			Date date = new Date();
+
+			DateFormat df = new SimpleDateFormat("hh");
+			int hour = Integer.parseInt(df.format(date));
+
+			if (dataList.size() == 0) {
+				dataList.add(data);
+			} else {
+				if (hour % 6 == 0) {
+					if (dataList.size() >= 5) {
+						dataList.remove(0);
+					}
+					dataList.add(data);
+				}
 			}
-			dataList.add(data);
+
 			List<Record> recordList = data.getRecords();
 
 			for (Record record : recordList) {
@@ -209,7 +226,7 @@ public class AirPollutionDataSchedular {
 				if (stationMap.containsKey(record.getCity())) {
 					List<String> station = stationMap.get(record.getCity());
 					if (!station.contains(record.getStation())) {
-						
+
 						station.add(record.getStation());
 					}
 				} else {
@@ -262,6 +279,8 @@ public class AirPollutionDataSchedular {
 				}
 			}
 
+		}
+		}catch(Exception e) {
 		}
 	}
 
